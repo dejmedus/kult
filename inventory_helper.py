@@ -10,7 +10,6 @@ def format_inv():
     return inv_str
 
 def get_inv():
-    print(inventory)
     return inventory
 
 def manage_inv(obj, add):

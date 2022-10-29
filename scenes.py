@@ -12,7 +12,8 @@ def return_all():
             'options': [
                 ['option A1(s2)', 'NEXT', 'scene2'],
                 ['option B1(s3)', 'NEXT', 'scene3'],
-                ['act:findKULT', 'ACTION' 'findKult'],
+                ['findKULT', 'ACTION' 'findKULT'],
+                ['findKULT4', 'ACTION' 'findKULT4'],
                 ['option C1(e)', 'NEXT', 'END'],
             ],
             'actions': {
@@ -25,10 +26,13 @@ def return_all():
                     'complete': False
                 },
                 # display image and message
+                #VIEWS cannot be marked complete
+                # you can view them multiple times
+                # doesnt need a completed message message[1]
                 'findKULT4': {
                     'name': 'findKULT4',
                     'action': 'VIEW',
-                    'message': ['you view a kult',],
+                    'message': ['you view a kult', ''],
                     'image': ascii_images['kult4'],
                     'complete': False
                 },

@@ -95,7 +95,7 @@ def main(stdscr, scene, inventory):
         
         # if action is not completed
         # complete action (add to inv, view something, a task) 
-        if action['complete'] == False:   
+        if action['complete'] == False:
             if action['action'] == 'ADD_TO_INV':
                 # if action is not completed 
                 # display image and message[0], add to inventory, set complete to TRUE
@@ -108,35 +108,28 @@ def main(stdscr, scene, inventory):
                 # action is now complete
                 action['complete'] = True
             # elif action['action'] == 'VIEW':
-                # display image and message
+            #     display image and message
 
             # elif action['action'] == 'TASK':
-                # display image and message, open window, complete task
-                # close window receive prize (move to a new scene/add obj to inventory)
+            #     display image and message, open window, complete task
+            #     close window receive prize (move to a new scene/add obj to inventory)
 
-        #if action has already been completed 
+        #if action is completed, display completed message
         else:
-            # display message that the action has already been completed
             stdscr.addstr(action['message'][0])
               
         # return to current scene after finishing action
         # pass scene refreshed inventory
         curses.wrapper(main, scene_map[scene['name']], inventory_helper.get_inv())
+        # curses.wrapper(main, scene_map[scene['name']], inventory)
 
 
 # def start_screen(stdscr):
-    
 #     stdscr.erase()
 # #     stdscr.addstr(f,  curses.A_BOLD)
-
 #     # start the game!
 #     # curses.wrapper(main, scene_map['scene1'], inventory)
-
-
 # curses.wrapper(start_screen)
 
 # start the game!
-print(inventory)
-print('\n\n\n')
 curses.wrapper(main, scene_map['scene1'], inventory)
-print('exited')
