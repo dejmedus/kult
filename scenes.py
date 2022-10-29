@@ -10,27 +10,38 @@ def return_all():
             'header': 'scene 1',
             'body': 'this is the body text',
             'options': [
-                ['option A1(s2)', 'scene2'],
-                ['option B1(s3)', 'scene3'],
-                ['option C1(e)', 'END'],
+                ['option A1(s2)', 'NEXT', 'scene2'],
+                ['option B1(s3)', 'NEXT', 'scene3'],
+                ['act:findKULT', 'ACTION' 'findKult'],
+                ['option C1(e)', 'NEXT', 'END'],
             ],
             'actions': {
-                # action, message, 
-                # pick_up(message, obj name, obj image)
-                # display message and image, add image name to inventory
+                # display image and message, add to inventory
                 'findKULT': {
                     'name': 'findKULT',
-                    'add_to_inv': True,
-                    'message': 'you have found a WILD KULT',
-                    'image': ascii_images['kult1']
+                    'action': 'ADD_TO_INV',
+                    'message': ['add kult1 to inventory', 'you found a findKULT here previously'],
+                    'image': ascii_images['kult1'],
+                    'complete': False
                 },
-                'findOTHERKULT': {
+                # display image and message
+                'findKULT4': {
                     'name': 'findKULT4',
-                    'add_to_inv': False,
-                    'message': 'you see a KULT staring at you out of the corner of your eye',
-                    'image': ascii_images['kult4']
-                }
-                
+                    'action': 'VIEW',
+                    'message': ['you view a kult',],
+                    'image': ascii_images['kult4'],
+                    'complete': False
+                },
+                # display image and message, open window, complete task
+                # close window receive prize (move to a new scene/add obj to inventory)
+                'puzzleExample': {
+                    'name': 'puzzleExample',
+                    'action': 'TASK',
+                    'message': ['TASK: task instructions','you discovered a secret TASKPRIZE'],
+                    'image': ascii_images['kult4'],
+                    'func': '!!!!!!!WINDOW HERE!!!!!!',
+                    'complete': False
+                },
             },
         },
         'scene2': {
@@ -39,20 +50,23 @@ def return_all():
             'header': 'scene 2',
             'body': 'this is the body text',
             'options': [
-                ['option A2(s3)', 'scene3'],
-                ['option B2(s3)', 'scene3'],
-                ['option C2(e)', 'END'],
-            ]
+                ['option A2(s3)', 'NEXT', 'scene3'],
+                ['option B2(s3)', 'NEXT', 'scene3'],
+                ['option C2(e)', 'NEXT', 'END'],
+                # ['go back to scene1', 'RETURN' 'scene2']
+            ],
+            'actions': {'action' : '2'}
         },
         'scene3': {
             'name': 'scene3',
-            'image': 'NONE',
+            'image': None,
             'header': 'scene 3',
             'body': 'this is the body text',
             'options': [
-                ['option A2(e)', 'END'],
-                ['option B2(e)', 'END'],
-                ['option C2(e)', 'END'],
-            ]
+                ['option A2(e)''NEXT', 'END'],
+                ['option B2(e)''NEXT', 'END'],
+                ['option C2(e)''NEXT', 'END'],
+            ],
+            'actions': {'action' : '3'}
         },
     }
