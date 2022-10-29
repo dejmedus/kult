@@ -9,6 +9,7 @@ def main(stdscr, scene):
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
+    image = scene['image']
     header = scene['header']
     body = scene['body']
     options = scene['options']
@@ -19,6 +20,10 @@ def main(stdscr, scene):
     # while enter hasn't been clicked
     while chosen_option != 10:
         stdscr.erase()
+        
+        if image != 'NONE':
+            stdscr.addstr(image)
+        
         if len(header) > 0:
             stdscr.addstr(f'\n                      ---{header}--- \n\n', curses.A_DIM)
 
@@ -58,6 +63,16 @@ def main(stdscr, scene):
         curses.wrapper(main, scene_map[next_scene])
 
 
+# def start_screen(stdscr):
+    
+#     stdscr.erase()
+# #     stdscr.addstr(f,  curses.A_BOLD)
+
+#     # start the game!
+#     # curses.wrapper(main, scene_map['scene1'])
+
+
+# curses.wrapper(start_screen)
+
 # start the game!
 curses.wrapper(main, scene_map['scene1'])
-
