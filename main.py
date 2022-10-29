@@ -1,12 +1,15 @@
 import curses
-from sys import stderr
+import textwrap
 
 import scenes
 import inventory_helper
 
 inventory = inventory_helper.get_inv()
 scene_map = scenes.return_all()
-# end_message = 'Thanks for playing!'
+
+start_message = scenes.start_scene()
+end_message = scenes.end_scene()
+intro = scenes.intro_scene()
 
 def main(stdscr, scene, inventory):
 
@@ -48,7 +51,11 @@ def main(stdscr, scene, inventory):
             else:
                 option_color = curses.color_pair(1)
             stdscr.addstr(f'    {i + 1}. ')
-            stdscr.addstr(f'{options[i][0]}\n', option_color)
+            # if last option, don't add newline
+            if i != len(options) - 1:
+                stdscr.addstr(f'{options[i][0]}\n', option_color)
+            else:
+                stdscr.addstr(f'{options[i][0]}', option_color)
 
         # by default, the highlighted option is options[0][0] (shown as top of list)
         # if you press the down key and the highlighted option is not at the bottom of the list move down (up is opposite)
@@ -71,7 +78,10 @@ def main(stdscr, scene, inventory):
         # display end message if END is reached
         if next_scene == 'END':
             stdscr.erase()
-            stdscr.addstr('\n\n\n               Thanks for playing! Press enter to quit.')
+            stdscr.addstr(f"{end_message['kult_namecard']}\n\n")
+            stdscr.addstr(f"{end_message['header']}\n", curses.A_BOLD)
+            stdscr.addstr(f"{end_message['message']}\n\n")
+            stdscr.addstr(f"{end_message['prompt']}")
             wait_for_enter(stdscr)
         
         # else next_scene is a named scene   
@@ -128,12 +138,6 @@ def main(stdscr, scene, inventory):
     else:
         error_finder(stdscr, f'option_type error {option} {option_type}')
       
-# def start_screen(stdscr):
-#     stdscr.erase()
-# #     stdscr.addstr(f,  curses.A_BOLD)
-#     # start the game!
-#     # curses.wrapper(main, scene_map['scene1'], inventory)
-# curses.wrapper(start_screen)
 
 def wait_for_enter(stdscr):
     key_press = stdscr.getch()
@@ -144,8 +148,35 @@ def error_finder(stdscr, message):
     stdscr.erase()
     stdscr.addstr(message)
     wait_for_enter(stdscr)
-        
-        
+    
+def format_text(text):
+    return textwrap.wrap(text, width=80, initial_indent='       ', subsequent_indent='      ')
+  
+# should start screen be a seperate screen or just a scene?      
+def start_scene(stdscr):
+    # display welcome screen
+    stdscr.erase()
+    stdscr.addstr(f"{start_message['kult_namecard']}\n\n")
+    stdscr.addstr(f"{start_message['header']}", curses.A_BOLD)
+    stdscr.addstr(f"{start_message['message']}")
+    stdscr.addstr(f"{start_message['controls']}\n\n", curses.A_DIM)
+    stdscr.addstr(f"{start_message['prompt']}")
+    wait_for_enter(stdscr)
+    
+    stdscr.erase()
+    # display intro scene
+    for line in intro:
+        stdscr.clear()
+        stdscr.addstr('\n\n\n')
+        lineArr = textwrap.wrap(line, width=70, initial_indent='       ', subsequent_indent='      ')
+        for line in lineArr:
+            stdscr.addstr(f'{line}\n')
+        wait_for_enter(stdscr)
+    
+    # start the game!
+    curses.wrapper(main, scene_map['scene1'], inventory)
+    
+curses.wrapper(start_scene)       
 
 # start the game!
-curses.wrapper(main, scene_map['scene1'], inventory)
+# curses.wrapper(main, scene_map['scene1'], inventory)

@@ -1,5 +1,5 @@
 inventory = {
-    # 'dossier': 'dossier'
+    # 'dossier': ['dossier', dossierImage]
 }
 
 def format_inv():
