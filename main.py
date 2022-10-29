@@ -2,6 +2,7 @@ import curses
 import scenes
 
 scene_map = scenes.return_all()
+# end_message = 'Thanks for playing!'
 
 def main(stdscr, scene):
 
@@ -10,7 +11,6 @@ def main(stdscr, scene):
 
     header = scene['header']
     body = scene['body']
-    # options = [option[0] for option in scene['options']]
     options = scene['options']
 
     chosen_option = 0
@@ -34,16 +34,30 @@ def main(stdscr, scene):
             stdscr.addstr(f'{options[i][0]}\n', option_color)
 
         # by default, the highlighted option is options[0][0] (shown as top of list)
-        # if you press the down key and the highlighted option is not at the bottom of the list move down
-        # if you press the up key, and the highlighted is not at the top of the list move up  
+        # if you press the down key and the highlighted option is not at the bottom of the list move down (up is opposite)
         chosen_option = stdscr.getch()
         if chosen_option == curses.KEY_UP and highlighted_option_index > 0:
             highlighted_option_index -= 1
         elif chosen_option == curses.KEY_DOWN and highlighted_option_index < len(options) - 1:
             highlighted_option_index += 1
 
-    return highlighted_option_index
+    choice = options[highlighted_option_index][0]
+    next_scene = options[highlighted_option_index][1]
+
+    # display end message if END is reached
+    if next_scene == 'END':
+        stdscr.addstr('Thanks for playing!')
+        return
+    # if choice (the chosen option) is RETURN remove current return instructions (options[-1]) and go back to previous scene
+    # otherwise, set the next scenes return instructions and move forward to that scene
+    else: 
+        if choice == '...RETURN':
+            options.pop()
+        else:
+            scene_map[next_scene]['options'].append(['...RETURN', scene['name']])
+        curses.wrapper(main, scene_map[next_scene])
 
 
-choice = curses.wrapper(main, scene_map['scene1'])
-print(choice)
+# start the game!
+curses.wrapper(main, scene_map['scene1'])
+
