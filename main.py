@@ -1,4 +1,5 @@
 import curses
+from sys import stderr
 
 import scenes
 import inventory_helper
@@ -28,9 +29,9 @@ def main(stdscr, scene, inventory):
         stdscr.erase()
         
         if inventory:
-            stdscr.addstr(inventory_helper.format_inv())
+            stdscr.addstr(f'inventory: {inventory_helper.format_inv()}\n\n')
         else:
-            stdscr.addstr('\ninventory empty\n\n')
+            stdscr.addstr('inventory: \n\n')
         
         if image != None:
             stdscr.addstr(image)
@@ -69,8 +70,10 @@ def main(stdscr, scene, inventory):
         
         # display end message if END is reached
         if next_scene == 'END':
-            stdscr.addstr('Thanks for playing!')
-            
+            stdscr.erase()
+            stdscr.addstr('\n\n\n               Thanks for playing! Press enter to quit.')
+            wait_for_enter(stdscr)
+        
         # else next_scene is a named scene   
         # set the next scene's return instructions and move forward to that scene [option[2]]
         else:
@@ -78,7 +81,6 @@ def main(stdscr, scene, inventory):
             # scene_map[next_scene]['options'].append([return_message, 'RETURN', scene['name']])
             scene_map[next_scene]['options'].append(['go back', 'RETURN', scene['name']])
             
-            # we dont have to refresh inventory here, because nothing is added in NEXT options
             curses.wrapper(main, scene_map[next_scene], inventory)
             
     # if RETURN, remove current return instructions (options[-1]) 
@@ -86,50 +88,64 @@ def main(stdscr, scene, inventory):
     elif option_type == 'RETURN':
         options.pop()
 
-        # we dont have to refresh inventory here
         # option[2] is the previous scenes dict key/name
         curses.wrapper(main, scene_map[option[2]], inventory)
             
     elif option_type == 'ACTION':
+        stdscr.erase()
         action = actions[option[2]]
-        
         # if action is not completed
         # complete action (add to inv, view something, a task) 
         if action['complete'] == False:
+            # display image and message[0], add to inventory, set complete to TRUE
             if action['action'] == 'ADD_TO_INV':
-                # if action is not completed 
-                # display image and message[0], add to inventory, set complete to TRUE
-                # display image 
-                stdscr.addstr(action['image'])
-                # display message 
-                stdscr.addstr(action['message'][0])
-                # add to inventory: 
+                stdscr.addstr(f"{action['image']}\n")
+                stdscr.addstr(f"\n  {action['message'][0]}") 
                 inventory_helper.manage_inv(action['name'], True)
-                # action is now complete
-                action['complete'] = True
-            # elif action['action'] == 'VIEW':
-            #     display image and message
+                action['complete'] = True    
+            
+            # display image and message[0], can be viewed again, 'complete' remains false
+            elif action['action'] == 'VIEW':
+                stdscr.addstr(f"{action['image']}\n")
+                stdscr.addstr(f"\n  {action['message'][0]}") 
 
             # elif action['action'] == 'TASK':
             #     display image and message, open window, complete task
             #     close window receive prize (move to a new scene/add obj to inventory)
-
+            else:
+                error_finder(stdscr, f"action['action'] error {action['action']}")
+    
         #if action is completed, display completed message
-        else:
-            stdscr.addstr(action['message'][0])
-              
+        elif action['complete'] == True:
+                stdscr.addstr(f"\n\n  {action['message'][1]}") 
+        else: 
+            error_finder(stdscr, f"action['complete'] error {action['complete']}")
+            
         # return to current scene after finishing action
-        # pass scene refreshed inventory
-        curses.wrapper(main, scene_map[scene['name']], inventory_helper.get_inv())
-        # curses.wrapper(main, scene_map[scene['name']], inventory)
-
-
+        wait_for_enter(stdscr)
+        curses.wrapper(main, scene_map['scene1'], inventory)
+    
+    else:
+        error_finder(stdscr, f'option_type error {option} {option_type}')
+      
 # def start_screen(stdscr):
 #     stdscr.erase()
 # #     stdscr.addstr(f,  curses.A_BOLD)
 #     # start the game!
 #     # curses.wrapper(main, scene_map['scene1'], inventory)
 # curses.wrapper(start_screen)
+
+def wait_for_enter(stdscr):
+    key_press = stdscr.getch()
+    while key_press != 10:
+        key_press = stdscr.getch()
+        
+def error_finder(stdscr, message):
+    stdscr.erase()
+    stdscr.addstr(message)
+    wait_for_enter(stdscr)
+        
+        
 
 # start the game!
 curses.wrapper(main, scene_map['scene1'], inventory)

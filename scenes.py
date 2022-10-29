@@ -12,8 +12,8 @@ def return_all():
             'options': [
                 ['option A1(s2)', 'NEXT', 'scene2'],
                 ['option B1(s3)', 'NEXT', 'scene3'],
-                ['findKULT', 'ACTION' 'findKULT'],
-                ['findKULT4', 'ACTION' 'findKULT4'],
+                ['find KULT', 'ACTION', 'findKULT'],
+                ['find KULT4', 'ACTION', 'findKULT4'],
                 ['option C1(e)', 'NEXT', 'END'],
             ],
             'actions': {
