@@ -92,7 +92,7 @@ def return_all():
                     'image': None,
                     'complete': True,
                     'unlocks': [],
-                    'locks': []
+                    'locks': ['follow']
                 },
             }
         },
@@ -119,16 +119,16 @@ def return_all():
                     'image': None,
                     'complete': False,
                     'unlocks': ['break_window'],
-                    'locks': []
+                    'locks': ['search_yard']
                 },
                 'break_window': {
                     'action': 'VIEW',
-                    'message': ['', 'The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system. You will have to find another way.'],
+                    'message': ['', 'The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system.  This reminds you that you need to be sneaky. You will have to find another way in.'],
                     # 'image': ascii_images['rock'],
                     'image': None,
                     'complete': True,
                     'unlocks': [],
-                    'locks': []
+                    'locks': ['break_window']
                 },
                 'pick_lock': {
                     'action': 'TASK',
@@ -154,7 +154,7 @@ def return_all():
         'conditionals': [['rock', 'smash'], ],
         'options': [
             ['Smash it with a rock', 'ACTION', 'smash', False],
-            ['Explore the house', 'NEXT', 'explore', False],
+            ['Explore the house', 'NEXT', 'the_kultists_lair', False],
             ['Youre a spy! Use the signal jammer.', 'ACTION', 'jammer', True],
         ],
         'actions': {
@@ -165,7 +165,7 @@ def return_all():
                 'image': None,
                 'complete': True,
                 'unlocks': [],
-                'locks': []
+                'locks': ['smash']
             },
             'jammer': {
                 'action': 'TASK',
@@ -174,7 +174,7 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': False,
-                'unlocks': ['explore'],
+                'unlocks': ['the_kultists_lair'],
                 'locks': ['smash', 'jammer']
             },
         }

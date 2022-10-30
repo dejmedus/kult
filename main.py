@@ -30,11 +30,10 @@ def main(stdscr, scene, inventory):
         for conditional in scene['conditionals']:
             conditional_object = conditional[0]
             conditional_scene = conditional[1]
-            
             # if conditional_object is in inventory, find conditional scene and unlock it
             if conditional_object in inventory:
                 option_to_unlock = [option for option in all_options if conditional_scene in option]
-                option_to_unlock[0][3]
+                option_to_unlock[0][3] = True
         
     options = [option for option in all_options if True in option]
     
@@ -175,9 +174,19 @@ def main(stdscr, scene, inventory):
         # if action has locked a scene
         if action['complete'] and action['locks']:
             for lock in action['locks']:
-                option_to_unlock = [option for option in all_options if lock in option]
+                option_to_lock = [option for option in all_options if lock in option]
                 # access [0] because list comprehension returns a list
-                option_to_unlock[0][3] = False
+                option_to_lock[0][3] = False
+            
+                # if conditional scene is locked, remove it from conditionals
+                if scene['conditionals']:
+                    for conditional in scene['conditionals']:
+                        conditional_scene = conditional[1]
+                        
+                        if conditional_scene == option_to_lock[0][2]:
+                            cond_option_to_lock = [option for option in all_options if conditional_scene in option]
+                            # remove scene from conditionals
+                            scene['conditionals'].remove(cond_option_to_lock)
             
         # return to current scene after finishing action
         wait_for_enter(stdscr)
