@@ -22,6 +22,7 @@ new_scene = f"""'{scene_name}': {{
         'image': None,
         'header': '{header}',
         'body': '{body}',
+        'can_go_back': False,
         # [objInIv, unlockScene]
         'conditionals': [],
         'options': [
@@ -55,7 +56,8 @@ new_scene = f"""'{scene_name}': {{
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': False,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             }},
         }}
     }},"""

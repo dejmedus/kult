@@ -34,7 +34,7 @@ def main(stdscr, scene, inventory):
             # if conditional_object is in inventory, find conditional scene and unlock it
             if conditional_object in inventory:
                 option_to_unlock = [option for option in all_options if conditional_scene in option]
-                option_to_unlock[0][3] = True
+                option_to_unlock[0][3]
         
     options = [option for option in all_options if True in option]
     
@@ -98,11 +98,10 @@ def main(stdscr, scene, inventory):
             wait_for_enter(stdscr)
 
         # else next_scene is a named scene
-        # set the next scene's return instructions and move forward to that scene [option[2]]
+        # if can_go_back, set the next scene's return instructions and move forward to that scene [option[2]]
         else:
-            # return_message = f"return to {scene['name']}"
-            # scene_map[next_scene]['options'].append([return_message, 'RETURN', scene['name']])
-            scene_map[next_scene]['options'].append(['go back', 'RETURN', scene['name'], True])
+            if scene_map[next_scene]['can_go_back'] == True:
+                scene_map[next_scene]['options'].append(['go back', 'RETURN', scene['name'], True])
 
             curses.wrapper(main, scene_map[next_scene], inventory)
 
@@ -172,6 +171,13 @@ def main(stdscr, scene, inventory):
                 option_to_unlock = [option for option in all_options if unlock in option]
                 # access [0] because list comprehension returns a list
                 option_to_unlock[0][3] = True
+                
+        # if action has locked a scene
+        if action['complete'] and action['locks']:
+            for lock in action['locks']:
+                option_to_unlock = [option for option in all_options if lock in option]
+                # access [0] because list comprehension returns a list
+                option_to_unlock[0][3] = False
             
         # return to current scene after finishing action
         wait_for_enter(stdscr)

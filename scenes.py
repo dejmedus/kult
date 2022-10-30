@@ -15,9 +15,8 @@ def start_scene():
         Controls:
         Please resize your terminal window to 80x20.
         > Press enter to continue
-        > Use the up and down keys to navigate options 
-        menus
-        > After entering an answer during challenges, press Control+G to submit''',
+        > Use the up and down keys to navigate options
+        menus''',
         'prompt': '''
         ...continue'''
     }
@@ -77,6 +76,7 @@ def return_all():
             'image': None,
             'header': 'Stuart Avenue. 8:58pm. Thursday, Oct 8th.',
             'body': 'In a few minutes, if everything goes to plan, the suspect will leave their home. Will you follow them?',
+            'can_go_back': False,
             'conditionals': [],
             'options': [
                 # message, ACTION, next scene, is unlocked
@@ -91,7 +91,8 @@ def return_all():
                     # 'image': ascii_images[''],
                     'image': None,
                     'complete': True,
-                    'unlocks': []
+                    'unlocks': [],
+                    'locks': []
                 },
             }
         },
@@ -101,11 +102,11 @@ def return_all():
             'image': None,
             'header': 'Front Door',
             'body': 'Its now or never. Find a way into the house that will not raise the alarm.',
+            'can_go_back': True,
             'conditionals': [],
             'options': [
                     ['Break window', 'ACTION', 'break_window', False],
-                    ### CHANGE BACK TO FALSE
-                    ['Enter the house', 'NEXT', 'entry_way', True],
+                    ['Enter the house', 'NEXT', 'entry_way', False],
                     ['Look around the front yard.', 'ACTION', 'search_yard', True],
                     ['Examine the lock', 'ACTION', 'pick_lock', True],
             ],
@@ -117,7 +118,8 @@ def return_all():
                     # 'image': ascii_images['search_yard'],
                     'image': None,
                     'complete': False,
-                    'unlocks': ['break_window']
+                    'unlocks': ['break_window'],
+                    'locks': []
                 },
                 'break_window': {
                     'action': 'VIEW',
@@ -125,7 +127,8 @@ def return_all():
                     # 'image': ascii_images['rock'],
                     'image': None,
                     'complete': True,
-                    'unlocks': []
+                    'unlocks': [],
+                    'locks': []
                 },
                 'pick_lock': {
                     'action': 'TASK',
@@ -135,7 +138,8 @@ def return_all():
                     # 'image': ascii_images['rock'],
                     'image': None,
                     'complete': False,
-                    'unlocks': ['entry_way']
+                    'unlocks': ['entry_way'],
+                    'locks': ['pick_lock']
                 },
             }
         },
@@ -146,13 +150,12 @@ def return_all():
         'image': None,
         'header': 'Entry Way',
         'body': 'Youre in. But the Kultist isnt going to make this easy for you.The alarm beside the door begins to beep. You have 30 seconds to disable the alarm before it sounds.',
-        'conditionals': [['rock', 'smash'],],
+        'can_go_back': False,
+        'conditionals': [['rock', 'smash'], ],
         'options': [
             ['Smash it with a rock', 'ACTION', 'smash', False],
-            ['Go into the kitchen', 'NEXT', 'kitchen', False],
-            ['Go into the living room', 'NEXT', 'livingroom', False],
-            ['Go into the bedroom', 'NEXT', 'bedroom', False],
-            ['Youre a spy! Use the signal jammer.', 'ACTION', 'jammer', True], 
+            ['Explore the house', 'NEXT', 'explore', False],
+            ['Youre a spy! Use the signal jammer.', 'ACTION', 'jammer', True],
         ],
         'actions': {
             'smash': {
@@ -161,7 +164,8 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             },
             'jammer': {
                 'action': 'TASK',
@@ -170,8 +174,82 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': False,
-                'unlocks': ['kitchen', 'bedroom', 'livingroom']
+                'unlocks': ['explore'],
+                'locks': ['smash', 'jammer']
             },
         }
     },
-}
+'the_kultists_lair': {
+        'name': 'the_kultists_lair',
+       # 'image': ascii_images['the_kultists_lair'],
+        'image': None,
+        'header': 'The Kultists Lair',
+        'body': 'Now that the danger of discovery has passed you can look around without distractions. To the right is a small kitchen. To the left ais a living room devoid of furniture except for a recliner, a television, and some wall art. Ahead is two doors, one of which must lead to the bedroom.',
+        'can_go_back': False,
+        'conditionals': [],
+        'options': [
+            ['Go into the kitchen', 'NEXT', 'kitchen', True],
+            ['Go into the living room', 'NEXT', 'livingroom', True],
+            ['Go into the bedroom', 'NEXT', 'bedroom', True],
+        ],
+        'actions': {}
+    },
+    'kitchen': {
+        'name': 'kitchen',
+       # 'image': ascii_images['kitchen'],
+        'image': None,
+        'header': 'Kitchen',
+        'body': 'The kitchen is spotless. The counters are empty save for a fruit bowl and what looks like a row of cook books. On the fridge, a color photograph of a shark and a an old grocery receipt are held on by magnets.',
+        # [objInIv, unlockScene]
+        'can_go_back': True,
+        'conditionals': [['rock', 'plates']],
+        'options': [
+            ['Examine the fruit bowl', 'ACTION', 'fruitbowl', True],
+            ['Look at the photograph', 'ACTION', 'photo', True],
+            ['Read the grocery receipt', 'ACTION', 'receipt', True],
+            ['Page through the cook books', 'ACTION', 'cookbooks', True],
+            ['Smash all the plates with the rock', 'ACTION', 'plates', False],
+        ],
+        'actions': {
+            'fruitbowl': {
+                'action': 'VIEW',
+                'message': ['', 'Apples and oranges sit in a white bowl. They are shiny and seemingly very fresh. There is nothing else in the bowl.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+            'photo': {
+                'action': 'VIEW',
+                'message': ['', 'A glossy photo of a shark jumping out of the water, jaws open. It is held up by a magnet shaped like a cat... or maybe an orca, its hard to tell.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+            'receipt': {
+                'action': 'VIEW',
+                'message': ['', ' '],
+                'image': ascii_images['receipt'],
+                # 'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+            'cookbooks': {
+                'action': 'VIEW',
+                'message': ['', 'The hardback cookbooks sit in a neat row. Upon perusal you find they are all empty except for one book. In it, someone has noted what seems to be the recipe for a cheese sandwich. It reads as follows: bread cheese bread'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+             'plates': {
+                'action': 'VIEW',
+                'message': ['', '...weve talked about this.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+        }
+    },

@@ -8,7 +8,7 @@ def ascii_collection():
                     ██║  ██╗╚██████╔╝███████╗██║   
                     ╚═╝  ╚═╝ ╚═════╝╚══════╝╚═╝''',
 
-        'recipt': '''
+        'receipt': '''
                      ____________________________
                     |         DeluxMart          |
                     |     Save Money Today!      |
