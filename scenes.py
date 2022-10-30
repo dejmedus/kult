@@ -30,8 +30,6 @@ def intro_scene():
         '''
         It is unknown where this chemical weapon, if real, is located or who has access to its trigger. The agency has opted to conduct investigations quietly, without tipping off Kult members.''',
 
-        # '''It's up to you to infiltrate this nefarious group, learn the truth, and save humanity.''',
-
         '''
         Analysts have tracked down what they believe to be an active Kult cell; including one member of particular interest due to their apparent prodigal network engineering knowledge.''',
 
