@@ -104,10 +104,10 @@ def return_all():
                 'break_window': {
                     'name': 'rock',
                     'action': 'VIEW',
-                    'message': ['The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system. You will have to find another way.'],
+                    'message': ['', 'The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system. You will have to find another way.'],
                     # 'image': ascii_images['rock'],
                     'image': None,
-                    'complete': False,
+                    'complete': True,
                     'unlocks': ''
                 }, 
                     'pick_lock': {

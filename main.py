@@ -1,4 +1,5 @@
 import curses
+from curses.textpad import Textbox
 import textwrap
 
 import scenes
@@ -113,7 +114,8 @@ def main(stdscr, scene, inventory):
             # display image and message
             if action['image'] != None:
                 stdscr.addstr(f"{action['image']}\n")
-            stdscr.addstr(f"\n  {format_text(action['message'][0])}")
+                
+            stdscr.addstr(f"\n      {format_text(action['message'][0])}")
             
             # display image and message[0], add to inventory, set complete to TRUE
             if action['action'] == 'ADD_TO_INV':
@@ -123,25 +125,40 @@ def main(stdscr, scene, inventory):
             # can be viewed again, 'complete' remains false
             # elif action['action'] == 'VIEW':
 
-            # elif action['action'] == 'TASK':
-            #     if task is completed action['complete'] = True
+            elif action['action'] == 'TASK':
+                # if task is completed action['complete'] = True
+                window = curses.newwin(1, len(action['answer']) + 1, 15, curses.COLS // 2 + 5,)
+                window.border()
+                textbox = Textbox(window)
+                stdscr.refresh()
+                textbox.edit()
+                answer = textbox.gather()
+                answer = answer[:-1]
+
+                stdscr.clear()
+
+                if answer == action['answer']:
+                    action['complete'] = True
+                    stdscr.addstr(f"\n\n        {format_text('Correct!')}")
+                else:
+                    stdscr.addstr(f"\n\n        {format_text('Your answer was incorrect.')}")
 
             else:
                 error_finder(stdscr, f"action['action'] error {action['action']}")
-                
-            # if action has unlocked a scene
-            # find option with scene to be unlocked and set [3] to True
-            if action['unlocks']:
-                option_to_unlock = [option for option in all_options if action['unlocks'] in option]
-                option_to_unlock[0][3] = True
             
         # if action is completed, display completed message
         elif action['complete'] == True:
-            stdscr.addstr(f"\n\n  {format_text(action['message'][1])}")
+            stdscr.addstr(f"\n\n        {format_text(action['message'][1])}")
         else:
             error_finder(
                 stdscr, f"action['complete'] error {action['complete']}")
-
+            
+        # if action has unlocked a scene
+        # find option with scene to be unlocked and set [3] to True
+        if action['complete'] and action['unlocks']:
+            option_to_unlock = [option for option in all_options if action['unlocks'] in option]
+            option_to_unlock[0][3] = True
+            
         # return to current scene after finishing action
         wait_for_enter(stdscr)
         curses.wrapper(main, scene_map[scene['name']], inventory)
