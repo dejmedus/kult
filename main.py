@@ -22,7 +22,7 @@ def main(stdscr, scene, inventory):
     header = scene['header']
     body = scene['body']
 
-    # if option is unlocked (includes True), list it as an option
+
     all_options = scene['options']
     
     # if the scene has conditionals, unlock those scenes
@@ -34,10 +34,11 @@ def main(stdscr, scene, inventory):
             if conditional_object in inventory:
                 option_to_unlock = [option for option in all_options if conditional_scene in option]
                 option_to_unlock[0][3] = True
-        
+                
+    # if option is unlocked (includes True), list it as an option
     options = [option for option in all_options if True in option]
     
-    # will there be a time when a scene doesn't have any actions?
+    # some scenes may not have actions
     actions = scene.get('actions', None)
 
     chosen_option = 0
@@ -70,7 +71,7 @@ def main(stdscr, scene, inventory):
                 stdscr.addstr(f'{format_text(options[i][0])}', option_color)
 
         # by default, the highlighted option is options[0][0] (shown as top of list)
-        # if you press the down key and the highlighted option is not at the bottom of the list move down (up is opposite)
+        # if you press the down key and the highlighted option is not at the bottom of the list moves down (up is opposite)
         chosen_option = stdscr.getch()
         if chosen_option == curses.KEY_UP and highlighted_option_index > 0:
             highlighted_option_index -= 1
@@ -78,7 +79,7 @@ def main(stdscr, scene, inventory):
             highlighted_option_index += 1
 
     # when enter is clicked get the option chosen from arrow menu options
-    # get option_type from option[1]. One of:
+    # get option_type from option[1]. It will be one of:
     # NEXT (next scene), ACTION (view, add_to_inv, or task), RETURN (prev scene)
     option = options[highlighted_option_index]
     option_type = option[1]
@@ -105,8 +106,6 @@ def main(stdscr, scene, inventory):
             curses.wrapper(main, scene_map[next_scene], inventory)
 
     # if RETURN, remove current return instructions (options[-1])
-    # all_options and not options, because options is a generated copy of all_options
-    # all_options is the true scene['options']
     # then go back to previous scene [option[2]]
     elif option_type == 'RETURN':
         all_options.pop()
@@ -126,13 +125,10 @@ def main(stdscr, scene, inventory):
                 
             stdscr.addstr(f"\n      {format_text(action['message'][0])}")
             
-            # display image and message[0], add to inventory, set complete to TRUE
+            # add to inventory, set complete to TRUE
             if action['action'] == 'ADD_TO_INV':
                 inventory_helper.manage_inv(action['name'], True)
                 action['complete'] = True
-
-            # can be viewed again, 'complete' remains false
-            # elif action['action'] == 'VIEW':
 
             elif action['action'] == 'TASK':
 
@@ -142,7 +138,7 @@ def main(stdscr, scene, inventory):
                 stdscr.refresh()
                 textbox.edit()
                 answer = textbox.gather()
-                # 
+                # remove last char from answer string because textbox acts strange 
                 answer = answer[:-1]
 
                 reset_screen(stdscr, inventory)
@@ -171,11 +167,11 @@ def main(stdscr, scene, inventory):
                 # access [0] because list comprehension returns a list
                 option_to_unlock[0][3] = True
                 
-        # if action has locked a scene
+        # if action has locked a scene, find and set to False
         if action['complete'] and action['locks']:
             for lock in action['locks']:
                 option_to_lock = [option for option in all_options if lock in option]
-                # access [0] because list comprehension returns a list
+
                 option_to_lock[0][3] = False
             
                 # if conditional scene is locked, remove it from conditionals
@@ -183,7 +179,7 @@ def main(stdscr, scene, inventory):
                     for conditional in scene['conditionals']:
                         conditional_scene = conditional[1]
                         
-                         # if the conditional scene is the one we want to lock
+                         # if this conditional scene is the one we want to lock
                          # get the conditional [obj, scene] pair and use them 
                          # to remove from conditional from conditionals list
                         if conditional_scene == option_to_lock[0][2]:
@@ -222,31 +218,29 @@ def reset_screen(stdscr, inventory):
     stdscr.erase()
     if inventory:
         stdscr.addstr(f'inventory: {inventory_helper.format_inv()}\n\n')
-    else:
-        stdscr.addstr('inventory: \n\n')
-
-# should start screen be a seperate screen or just a scene?
 
 
 def start_scene(stdscr):
-    # # display welcome screen
-    # stdscr.erase()
-    # stdscr.addstr(f"{start_message['kult_namecard']}\n\n")
-    # stdscr.addstr(f"{format_centered_text(stdscr, start_message['header'])}", curses.A_BOLD)
-    # stdscr.addstr(f"{start_message['message']}")
-    # stdscr.addstr(f"{start_message['controls']}\n\n", curses.A_DIM)
-    # stdscr.addstr(f"{start_message['prompt']}")
-    # wait_for_enter(stdscr)
+    stdscr.erase()
+    stdscr.addstr(f"{start_message['kult_namecard']}\n\n")
+    stdscr.addstr(f"{start_message['header']}\n\n", curses.A_BOLD)
+    stdscr.addstr(f"{format_text(start_message['message'])}\n\n")
+    stdscr.addstr(f"{start_message['prompt']}")
+    
+    wait_for_enter(stdscr)
+    stdscr.erase()
+    
+    stdscr.addstr(f"{start_message['controls']}", curses.A_DIM)
 
-    # stdscr.erase()
-    # # display intro scene
-    # for line in intro:
-    #     stdscr.clear()
-    #     stdscr.addstr('\n\n\n')
-    #     lineArr = textwrap.wrap(line, width=70, subsequent_indent='      ')
-    #     for line in lineArr:
-    #         stdscr.addstr(f'{line}\n')
-    #     wait_for_enter(stdscr)
+    wait_for_enter(stdscr)
+    stdscr.erase()
+    
+    # display intro scene
+    for line in intro:
+        stdscr.clear()
+        stdscr.addstr('\n\n\n')
+        stdscr.addstr(format_text(line))
+        wait_for_enter(stdscr)
 
     # start the game!
     curses.wrapper(main, scene_map['street'], inventory)
@@ -254,5 +248,3 @@ def start_scene(stdscr):
 
 curses.wrapper(start_scene)
 
-# start the game!
-# curses.wrapper(main, scene_map['scene1'], inventory)

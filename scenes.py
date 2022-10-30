@@ -7,18 +7,18 @@ def start_scene():
     return {
         'kult_namecard': ascii_images['kult2'],
         'header': '''
-                        Welcome to Kult!''',
+                           Welcome to Kult!''',
         'message': '''
-        A short text adventure made for the Major League  Hacking Agent:Hacker 2 Hackathon! View on Github: dejmedus/kult.
+        Kult is a short text adventure made for the Major League  Hacking Agent:Hacker 2 Hackathon! View on Github: dejmedus/kult
         ''',
         'controls': '''
         Controls:
-        Please resize your terminal window to 80x20.
+        Please resize your terminal window to be 80x20 or larger.
         > Press enter to continue
-        > Use the up and down keys to navigate options
+        > Use the up and down arrow keys to navigate options
         menus''',
         'prompt': '''
-        ...continue'''
+        Press enter to continue'''
     }
 
 
@@ -39,13 +39,13 @@ def intro_scene():
         The agency now believes that this individual is the most likely of the cell to be trusted with supervising the toxin-release mechanism.''',
 
         '''
-        You have been tasked with entering the residence unseen to find evidence that will stop the Kult.''',
+        Your mission is to enter the residence unseen and find evidence that will stop the Kult.''',
 
         '''
         You have been given a dossier with the following information:''',
 
         '''
-        Mail is delivered to the name "L Secord".''',
+        Mail delivered to the residence is addressed to "L Secord".''',
         '''
         They have lived in a one-bedroom bungalow on 437 Stuart Avenue NW for a year.''',
         '''
@@ -132,7 +132,7 @@ def return_all():
                 },
                 'pick_lock': {
                     'action': 'TASK',
-                    'message': ['The lock seems of average make. Surprising for a cultists home. Picking it might be the best option. You determine the lock has three tumblers. Hitting a tumbler toggles it. Hitting the first or third also toggles the second.  The third must be hit last. Which order do you hit the tumblers? Answer: pin numbers in the order you will hit them', 'You expertly picked the lock in the order 123. Now you can enter the house.'],
+                    'message': ['The lock seems quite average. Surprising for a cultists home. Picking it might be the best option. You determine the lock has three tumblers. Hitting a tumbler toggles it up or down. Hitting the first or third also toggles the second. The third must be hit last. Which order do you hit the tumblers? Answer: type numbers in the order you will hit them', 'You expertly picked the lock in the order 123. Now you can enter the house.'],
                     # 1: YYN 2: YNN 3: YYY
                     'answer': '123',
                     # 'image': ascii_images['rock'],
@@ -169,7 +169,7 @@ def return_all():
             },
             'jammer': {
                 'action': 'TASK',
-                'message': ['To successfully use the jammer you must first determine the correct frequency. It is a number between 100 and 300. The last two digits are the same. You get the strange feeling that a computer would understand these two numbers.', 'You determined the frequency to be 100 and jammed the alarm system. Now you can explore the house.'],
+                'message': ['To successfully use the jammer you must first determine the correct frequency. It is a number between 100 and 300. The last two digits are the same. the first is unique. You get the strange feeling that a computer would understand these numbers.', 'You determined the frequency to be 100 and jammed the alarm system. Now you can explore the house.'],
                 'answer': '100',
                 # 'image': ascii_images[''],
                 'image': None,
