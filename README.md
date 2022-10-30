@@ -4,8 +4,8 @@
 
 #### It's up to you to infiltrate this nefarious group, learn the truth, and save humanity.
 
-Kult is a micro text adventure created for the Major League Hacking Agent:Hacker 2 Hackathon.
-It was built with Python (3.10.3) and the curses module. It runs in the terminal window.
+Kult is a micro text adventure created for the Major League Hacking Agent:Hacker 2 Hackathon in one weekend.
+It was built with Python (3.10.3) and the curses module. It runs in the terminal window and will likely take ~10 minutes to play through.
 
 ### Setup
 
@@ -17,7 +17,7 @@ This [article](https://www.devdungeon.com/content/curses-windows-python) recomme
 
 ### To Play the Game
 1. Fork the repository
-2. Clone www.github.com/you-user-name/kult
+2. Clone your-github-username/kult
 3. cd into the directory where you will store the game files
 4. Paste clone path into your terminal
 5. ```cd kult```
@@ -74,6 +74,7 @@ The odd poster in the living room features the numbers 250
 There are two possible combinations of these 6 numbers 250242 or 242250
 
 As a hint, the photo of the shark is seen before the grocery receipt
+
 Answer: **250242**
 </details>
 </details>
@@ -81,6 +82,8 @@ Answer: **250242**
 
 ### Resources that helped me create Kult
 I was inspired to create a CLI game by the fantastic [command line murder mystery.](https://github.com/veltman/clmystery)
+
+The title and end page ascii-art was generated with this great [tool](https://ascii-generator.site/t/)
 
 These two StackOverflow questions & answers pointed me towards the curses package. The options menu is adapted from the second.
 - [How do I print colored text to the terminal](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal)
