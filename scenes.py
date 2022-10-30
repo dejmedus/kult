@@ -2,13 +2,14 @@ import images
 
 ascii_images = images.ascii_collection()
 
+
 def start_scene():
     return {
         'kult_namecard': ascii_images['kult2'],
         'header': '''
-        Welcome to Kult!''',
+                        Welcome to Kult!''',
         'message': '''
-        A short text adventure made to be played in < 20 minutes.
+        A short text adventure made to be played in < 15 minutes.
         ''',
         'controls': '''
         Controls: 
@@ -17,111 +18,109 @@ def start_scene():
         'prompt': '''
         ...continue'''
     }
+
+
 def intro_scene():
     return [
-        '''The government's intelligence service has received reports that followers of the clandestine secret society: Kult av Blåhaj, will soon attempt to enslave humanity with an airborne biotoxin.''',
-        
-        '''It is unknown where this chemical weapon, if real, is located or who has access to its trigger. The agency has opted to conduct investigations quietly, without tipping off Kult members.''',
-        
-        # '''It's up to you to infiltrate this nefarious group, learn the truth, and save humanity.''',
-        
-        '''Analysts have tracked down what they believe to be an active Kult cell; including one member of particular interest due to their apparent prodigal network engineering knowledge.''',
-        
-        '''The agency now believes that this individual is the most likely of the cell to be trusted with supervising the toxin-release mechanism.''',
-        
-        '''You have been tasked with entering the residence unseen to find evidence that will stop the Kult.''',
-        
-        '''You have been given a dossier with the following information:''',
-        '''Mail is delivered to the name "L Secord".''',
-        '''They have lived in a brick townhouse on 437 Stuart Avenue NW for a year.''',
-        '''Finally, they only leave the house once a week, at 9pm each Thursday. They return exactly 20 minutes later... This is your window of opportunity.''',
-            
+        '''
+        The government's intelligence service has received reports that followers of the clandestine secret society: Kult av Blåhaj, will soon attempt to enslave humanity with an airborne biotoxin.''',
 
-        
-        '''Good luck agent''', 
+        '''
+        It is unknown where this chemical weapon, if real, is located or who has access to its trigger. The agency has opted to conduct investigations quietly, without tipping off Kult members.''',
+
+        # '''It's up to you to infiltrate this nefarious group, learn the truth, and save humanity.''',
+
+        '''
+        Analysts have tracked down what they believe to be an active Kult cell; including one member of particular interest due to their apparent prodigal network engineering knowledge.''',
+
+        '''
+        The agency now believes that this individual is the most likely of the cell to be trusted with supervising the toxin-release mechanism.''',
+
+        '''
+        You have been tasked with entering the residence unseen to find evidence that will stop the Kult.''',
+
+        '''
+        You have been given a dossier with the following information:''',
+
+        '''
+        Mail is delivered to the name "L Secord".''',
+        '''
+        They have lived in a brick townhouse on 437 Stuart Avenue NW for a year.''',
+        '''
+        Finally, they only leave the house once a week, at 9pm each Thursday. They return exactly 20 minutes later... This is your window of opportunity.''',
+
+        '''
+        Good luck agent''',
     ]
+
 
 def end_scene():
     return {
         'kult_namecard': ascii_images['kult2'],
         'header': '''
-        Thanks for playing Kult!''',
+                        Thanks for playing Kult!''',
         'message': '''
-        This game was made in < 36 hours during Major League Hacking's 
-        Agent:Hacker2 Hackathon.''',
+        This game was made in < 36 hours during Major League Hacking's Agent:Hacker2 Hackathon.''',
         'prompt': '''
         Press enter to quit'''
     }
-    
+
+
 def return_all():
     return {
-        'scene1': {
-            'name': 'scene1',
-            'image': ascii_images['scene1'],
-            'header': 'scene 1',
-            'body': 'this is the body text',
+        'street': {
+            'name': 'street',
+            # 'image': ascii_images['street'],
+            'image': None,
+            'header': 'Stuart Avenue. 8:58pm. Thursday, Oct 8th.',
+            'body': 'In a few minutes, if everything goes to plan, the suspect will leave their home. Will you follow them?',
             'options': [
-                ['option A1(s2)', 'NEXT', 'scene2'],
-                ['option B1(s3)', 'NEXT', 'scene3'],
-                ['find KULT', 'ACTION', 'findKULT'],
-                ['find KULT4', 'ACTION', 'findKULT4'],
-                ['option C1(e)', 'NEXT', 'END'],
+                    ['Yes', 'NEXT', 'END', True],
+                    ['No', 'NEXT', 'front_door', True],
+            ],
+        },
+        'front_door': {
+            'name': 'front_door',
+            # 'image': ascii_images['front_door'],
+            'image': None,
+            'header': 'Front Door',
+            'body': 'Secord has disapeared down the street. Its now or never. Find a way into the house that will not raise the alarm.',
+            'options': [
+                    ['Break window', 'ACTION', 'break_window', False],
+                    ['Enter the house', 'NEXT', 'entry_way', False],
+                    ['Look around the front yard.', 'ACTION', 'search_yard', True],
+                    ['Examine the lock', 'ACTION', 'pick_lock', True],
             ],
             'actions': {
-                # display image and message, add to inventory
-                'findKULT': {
-                    'name': 'findKULT',
+                'search_yard': {
+                    'name': 'rock',
                     'action': 'ADD_TO_INV',
-                    'message': ['add kult1 to inventory', 'you found a findKULT here previously'],
-                    'image': ascii_images['kult1'],
-                    'complete': False
+                    'message': ['In the overgrown flowerbed you find a large rock', 'You found a rock here. There doesnt seem to be anything else of interest.'],
+                    # 'image': ascii_images['search_yard'],
+                    'image': None,
+                    'complete': False,
+                    'unlocks': 'break_window'
                 },
-                # display image and message
-                #VIEWS cannot be marked complete
-                # you can view them multiple times
-                # doesnt need a completed message message[1]
-                'findKULT4': {
-                    'name': 'findKULT4',
+                'break_window': {
+                    'name': 'rock',
                     'action': 'VIEW',
-                    'message': ['you view a kult', ''],
-                    'image': ascii_images['kult4'],
-                    'complete': False
-                },
-                # display image and message, open window, complete task
-                # close window receive prize (move to a new scene/add obj to inventory)
-                'puzzleExample': {
-                    'name': 'puzzleExample',
+                    'message': ['The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system. You will have to find another way.'],
+                    # 'image': ascii_images['rock'],
+                    'image': None,
+                    'complete': False,
+                    'unlocks': ''
+                }, 
+                    'pick_lock': {
+                    'name': 'pick_lock',
                     'action': 'TASK',
-                    'message': ['TASK: task instructions','you discovered a secret TASKPRIZE'],
-                    'image': ascii_images['kult4'],
-                    'func': '!!!!!!!WINDOW HERE!!!!!!',
-                    'complete': False
+                    'message': ['The lock seems of average make. Surprising for a cultists home. Picking it might be the best option. You determine the lock has three tumblers. Hitting a tumbler toggles it. Hitting the first or third also toggles the second.  The third must be hit last. Which order do you hit the tumblers? Answer: pin numbers in the order you will hit them', ''],
+                    ### 1: YYN 2: YNN 3: YYY
+                    'answer': '123',
+                    # 'image': ascii_images['rock'],
+                    'image': None,
+                    'complete': False,
+                    'unlocks': 'entry_way'
                 },
-            },
-        },
-        'scene2': {
-            'name': 'scene2',
-            'image': ascii_images['kult2'],
-            'header': 'scene 2',
-            'body': 'this is the body text',
-            'options': [
-                ['option A2(s3)', 'NEXT', 'scene3'],
-                ['option B2(s3)', 'NEXT', 'scene3'],
-                ['option C2(e)', 'NEXT', 'END'],
-                # ['go back to scene1', 'RETURN' 'scene2']
-            ],
-            'actions': {'action' : '2'}
-        },
-        'scene3': {
-            'name': 'scene3',
-            'image': None,
-            'header': 'scene 3',
-            'body': 'this is the body text',
-            'options': [
-                ['option A2(e)''NEXT', 'END'],
-                ['option B2(e)''NEXT', 'END'],
-                ['option C2(e)''NEXT', 'END'],
-            ],
-            'actions': {'action' : '3'}
+            }
         },
     }
