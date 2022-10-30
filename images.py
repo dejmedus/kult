@@ -32,4 +32,4 @@ def ascii_collection():
         #             |    3. piece of bread           |
         #             |                                |
         #             __________________________________'''
-    }               
+    }

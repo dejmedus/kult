@@ -15,7 +15,7 @@ scene_name = scene_name.replace(" ", "_")
 
 body = input("body\n")
 
-# options ['message', NEXT, 'scene/action Name', isUnlocked]
+# options ['message', TYPE, 'scene/action name', isUnlocked]
 new_scene = f"""'{scene_name}': {{
         'name': '{scene_name}',
        # 'image': ascii_images['{scene_name}'],
@@ -23,7 +23,6 @@ new_scene = f"""'{scene_name}': {{
         'header': '{header}',
         'body': '{body}',
         'can_go_back': False,
-        # [objInIv, unlockScene]
         'conditionals': [],
         'options': [
             ['', 'NEXT', '', True],

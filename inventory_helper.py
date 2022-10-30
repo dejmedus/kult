@@ -4,7 +4,6 @@ def format_inv():
     inv_str = ''
     for i in inventory:
         inv_str += f' {i} '
-                
     return inv_str
 
 def get_inv():
@@ -18,5 +17,5 @@ def manage_inv(obj, add):
         # if we drop the item, the action of picking it up has still happened
         # and so action['complete'] remains true
         inventory.pop(obj)
-        
+
     return inventory

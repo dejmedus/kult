@@ -22,9 +22,8 @@ def main(stdscr, scene, inventory):
     header = scene['header']
     body = scene['body']
 
-
     all_options = scene['options']
-    
+
     # if the scene has conditionals, unlock those scenes
     if scene['conditionals']:
         for conditional in scene['conditionals']:
@@ -32,12 +31,13 @@ def main(stdscr, scene, inventory):
             conditional_scene = conditional[1]
             # if conditional_object is in inventory, find conditional scene and unlock it
             if conditional_object in inventory:
-                option_to_unlock = [option for option in all_options if conditional_scene in option]
+                option_to_unlock = [
+                    option for option in all_options if conditional_scene in option]
                 option_to_unlock[0][3] = True
-                
+
     # if option is unlocked (includes True), list it as an option
     options = [option for option in all_options if True in option]
-    
+
     # some scenes may not have actions
     actions = scene.get('actions', None)
 
@@ -53,7 +53,7 @@ def main(stdscr, scene, inventory):
             stdscr.addstr(image)
 
         if len(header) > 0:
-                format_centered_text(stdscr, header)
+            format_centered_text(stdscr, header)
 
         stdscr.addstr(f'    {format_text(body)}\n\n',  curses.A_BOLD)
 
@@ -101,7 +101,8 @@ def main(stdscr, scene, inventory):
         # if can_go_back, set the next scene's return instructions and move forward to that scene [option[2]]
         else:
             if scene_map[next_scene]['can_go_back'] == True:
-                scene_map[next_scene]['options'].append(['go back', 'RETURN', scene['name'], True])
+                scene_map[next_scene]['options'].append(
+                    ['go back', 'RETURN', scene['name'], True])
 
             curses.wrapper(main, scene_map[next_scene], inventory)
 
@@ -122,9 +123,9 @@ def main(stdscr, scene, inventory):
             # display image and message
             if action['image'] != None:
                 stdscr.addstr(f"{action['image']}\n")
-                
+
             stdscr.addstr(f"\n      {format_text(action['message'][0])}")
-            
+
             # add to inventory, set complete to TRUE
             if action['action'] == 'ADD_TO_INV':
                 inventory_helper.manage_inv(action['name'], True)
@@ -133,12 +134,13 @@ def main(stdscr, scene, inventory):
             elif action['action'] == 'TASK':
 
                 # draw input box the same size as the answer
-                window = curses.newwin(1, len(action['answer']) + 1, 15, curses.COLS // 2 - 10,)
+                window = curses.newwin(
+                    1, len(action['answer']) + 1, 15, curses.COLS // 2 - 10,)
                 textbox = Textbox(window)
                 stdscr.refresh()
                 textbox.edit()
                 answer = textbox.gather()
-                # remove last char from answer string because textbox acts strange 
+                # remove last char from answer string because textbox acts strange
                 answer = answer[:-1]
 
                 reset_screen(stdscr, inventory)
@@ -147,46 +149,51 @@ def main(stdscr, scene, inventory):
                     action['complete'] = True
                     stdscr.addstr(f"\n\n        {format_text('Correct!')}")
                 else:
-                    stdscr.addstr(f"\n\n        {format_text('Your answer was incorrect.')}")
+                    stdscr.addstr(
+                        f"\n\n        {format_text('Your answer was incorrect.')}")
 
             else:
-                error_finder(stdscr, f"action['action'] error {action['action']}")
-            
+                error_finder(
+                    stdscr, f"action['action'] error {action['action']}")
+
         # if action is completed, display completed message
         elif action['complete'] == True:
             stdscr.addstr(f"\n\n        {format_text(action['message'][1])}")
         else:
             error_finder(
                 stdscr, f"action['complete'] error {action['complete']}")
-            
+
         # if action has unlocked a scene
         # find option with scene to be unlocked and set to True
         if action['complete'] and action['unlocks']:
             for unlock in action['unlocks']:
-                option_to_unlock = [option for option in all_options if unlock in option]
+                option_to_unlock = [
+                    option for option in all_options if unlock in option]
                 # access [0] because list comprehension returns a list
                 option_to_unlock[0][3] = True
-                
+
         # if action has locked a scene, find and set to False
         if action['complete'] and action['locks']:
             for lock in action['locks']:
-                option_to_lock = [option for option in all_options if lock in option]
+                option_to_lock = [
+                    option for option in all_options if lock in option]
 
                 option_to_lock[0][3] = False
-            
+
                 # if conditional scene is locked, remove it from conditionals
                 if scene['conditionals']:
                     for conditional in scene['conditionals']:
                         conditional_scene = conditional[1]
-                        
-                         # if this conditional scene is the one we want to lock
-                         # get the conditional [obj, scene] pair and use them 
-                         # to remove from conditional from conditionals list
+
+                        # if this conditional scene is the one we want to lock
+                        # get the conditional [obj, scene] pair and use them
+                        # to remove from conditional from conditionals list
                         if conditional_scene == option_to_lock[0][2]:
                             conditional_object = conditional[0]
                             conditional_scene = conditional[1]
-                            scene['conditionals'].remove([conditional_object, conditional_scene])
-            
+                            scene['conditionals'].remove(
+                                [conditional_object, conditional_scene])
+
         # return to current scene after finishing action
         wait_for_enter(stdscr)
         curses.wrapper(main, scene_map[scene['name']], inventory)
@@ -210,9 +217,11 @@ def error_finder(stdscr, message):
 def format_text(text):
     return textwrap.fill(text, width=70, subsequent_indent='      ')
 
+
 def format_centered_text(stdscr, text):
     text = textwrap.fill(text, width=70, subsequent_indent='      ')
     return stdscr.addstr(4, curses.COLS // 2 - len(text) // 2, f'{text}\n\n', curses.A_DIM)
+
 
 def reset_screen(stdscr, inventory):
     stdscr.erase()
@@ -226,15 +235,15 @@ def start_scene(stdscr):
     stdscr.addstr(f"{start_message['header']}\n\n", curses.A_BOLD)
     stdscr.addstr(f"{format_text(start_message['message'])}\n\n")
     stdscr.addstr(f"{start_message['prompt']}")
-    
+
     wait_for_enter(stdscr)
     stdscr.erase()
-    
+
     stdscr.addstr(f"{start_message['controls']}", curses.A_DIM)
 
     wait_for_enter(stdscr)
     stdscr.erase()
-    
+
     # display intro scene
     for line in intro:
         stdscr.clear()
@@ -247,4 +256,3 @@ def start_scene(stdscr):
 
 
 curses.wrapper(start_scene)
-
