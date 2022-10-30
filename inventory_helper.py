@@ -1,6 +1,10 @@
 inventory = {
-    # 'dossier': ['dossier', dossierImage]
+    # with images
+    # 'dossier': ['dossier', dossierImage],
+    # currently
+    # 'dossier': 'dossier'
 }
+
 
 def format_inv():
     inv_str = ''

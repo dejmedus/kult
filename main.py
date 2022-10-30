@@ -24,9 +24,20 @@ def main(stdscr, scene, inventory):
 
     # if option is unlocked (includes True), list it as an option
     all_options = scene['options']
+    
+    # if the scene has conditionals, unlock those scenes
+    if scene['conditionals']:
+        for conditional in scene['conditionals']:
+            conditional_object = conditional[0]
+            conditional_scene = conditional[1]
+            
+            # if conditional_object is in inventory, find conditional scene and unlock it
+            if conditional_object in inventory:
+                option_to_unlock = [option for option in all_options if conditional_scene in option]
+                option_to_unlock[0][3] = True
+        
     options = [option for option in all_options if True in option]
     
-
     # will there be a time when a scene doesn't have any actions?
     actions = scene.get('actions', None)
 
@@ -126,17 +137,18 @@ def main(stdscr, scene, inventory):
             # elif action['action'] == 'VIEW':
 
             elif action['action'] == 'TASK':
-                # if task is completed action['complete'] = True
-                window = curses.newwin(1, len(action['answer']) + 1, 15, curses.COLS // 2 + 5,)
-                window.border()
+
+                # draw input box the same size as the answer
+                window = curses.newwin(1, len(action['answer']) + 1, 15, curses.COLS // 2 - 10,)
                 textbox = Textbox(window)
                 stdscr.refresh()
                 textbox.edit()
                 answer = textbox.gather()
+                # 
                 answer = answer[:-1]
 
-                stdscr.clear()
-
+                reset_screen(stdscr, inventory)
+                # if task is completed action['complete'] = True
                 if answer == action['answer']:
                     action['complete'] = True
                     stdscr.addstr(f"\n\n        {format_text('Correct!')}")
@@ -154,10 +166,12 @@ def main(stdscr, scene, inventory):
                 stdscr, f"action['complete'] error {action['complete']}")
             
         # if action has unlocked a scene
-        # find option with scene to be unlocked and set [3] to True
+        # find option with scene to be unlocked and set to True
         if action['complete'] and action['unlocks']:
-            option_to_unlock = [option for option in all_options if action['unlocks'] in option]
-            option_to_unlock[0][3] = True
+            for unlock in action['unlocks']:
+                option_to_unlock = [option for option in all_options if unlock in option]
+                # access [0] because list comprehension returns a list
+                option_to_unlock[0][3] = True
             
         # return to current scene after finishing action
         wait_for_enter(stdscr)

@@ -9,12 +9,15 @@ def start_scene():
         'header': '''
                         Welcome to Kult!''',
         'message': '''
-        A short text adventure made to be played in < 15 minutes.
+        A short text adventure made for the Major League  Hacking Agent:Hacker 2 Hackathon! View on Github: dejmedus/kult.
         ''',
         'controls': '''
-        Controls: 
-        > Press enter to continue 
-        > Use the up and down keys to navigate options menus''',
+        Controls:
+        Please resize your terminal window to 80x20.
+        > Press enter to continue
+        > Use the up and down keys to navigate options 
+        menus
+        > After entering an answer during challenges, press Control+G to submit''',
         'prompt': '''
         ...continue'''
     }
@@ -45,7 +48,7 @@ def intro_scene():
         '''
         Mail is delivered to the name "L Secord".''',
         '''
-        They have lived in a brick townhouse on 437 Stuart Avenue NW for a year.''',
+        They have lived in a one-bedroom bungalow on 437 Stuart Avenue NW for a year.''',
         '''
         Finally, they only leave the house once a week, at 9pm each Thursday. They return exactly 20 minutes later... This is your window of opportunity.''',
 
@@ -74,20 +77,35 @@ def return_all():
             'image': None,
             'header': 'Stuart Avenue. 8:58pm. Thursday, Oct 8th.',
             'body': 'In a few minutes, if everything goes to plan, the suspect will leave their home. Will you follow them?',
+            'conditionals': [],
             'options': [
-                    ['Yes', 'NEXT', 'END', True],
-                    ['No', 'NEXT', 'front_door', True],
+                # message, ACTION, next scene, is unlocked
+                ['Yes', 'ACTION', 'follow', True],
+                ['No', 'NEXT', 'front_door', True],
             ],
+            'actions': {
+                'follow': {
+                    'name': 'follow',
+                    'action': 'VIEW',
+                    'message': ['', 'You walk in the direction the Kult member left in. However, when you turn the corner you find the street empty. They dodged you. You should try the house.'],
+                    # 'image': ascii_images[''],
+                    'image': None,
+                    'complete': True,
+                    'unlocks': []
+                },
+            }
         },
         'front_door': {
             'name': 'front_door',
             # 'image': ascii_images['front_door'],
             'image': None,
             'header': 'Front Door',
-            'body': 'Secord has disapeared down the street. Its now or never. Find a way into the house that will not raise the alarm.',
+            'body': 'Its now or never. Find a way into the house that will not raise the alarm.',
+            'conditionals': [],
             'options': [
                     ['Break window', 'ACTION', 'break_window', False],
-                    ['Enter the house', 'NEXT', 'entry_way', False],
+                    ### CHANGE BACK TO FALSE
+                    ['Enter the house', 'NEXT', 'entry_way', True],
                     ['Look around the front yard.', 'ACTION', 'search_yard', True],
                     ['Examine the lock', 'ACTION', 'pick_lock', True],
             ],
@@ -99,28 +117,61 @@ def return_all():
                     # 'image': ascii_images['search_yard'],
                     'image': None,
                     'complete': False,
-                    'unlocks': 'break_window'
+                    'unlocks': ['break_window']
                 },
                 'break_window': {
-                    'name': 'rock',
                     'action': 'VIEW',
                     'message': ['', 'The living room window is within reach, but as you move to break it you notice a blinking red light visible through the glass. An alarm system. You will have to find another way.'],
                     # 'image': ascii_images['rock'],
                     'image': None,
                     'complete': True,
-                    'unlocks': ''
-                }, 
-                    'pick_lock': {
-                    'name': 'pick_lock',
+                    'unlocks': []
+                },
+                'pick_lock': {
                     'action': 'TASK',
-                    'message': ['The lock seems of average make. Surprising for a cultists home. Picking it might be the best option. You determine the lock has three tumblers. Hitting a tumbler toggles it. Hitting the first or third also toggles the second.  The third must be hit last. Which order do you hit the tumblers? Answer: pin numbers in the order you will hit them', ''],
-                    ### 1: YYN 2: YNN 3: YYY
+                    'message': ['The lock seems of average make. Surprising for a cultists home. Picking it might be the best option. You determine the lock has three tumblers. Hitting a tumbler toggles it. Hitting the first or third also toggles the second.  The third must be hit last. Which order do you hit the tumblers? Answer: pin numbers in the order you will hit them', 'You expertly picked the lock in the order 123. Now you can enter the house.'],
+                    # 1: YYN 2: YNN 3: YYY
                     'answer': '123',
                     # 'image': ascii_images['rock'],
                     'image': None,
                     'complete': False,
-                    'unlocks': 'entry_way'
+                    'unlocks': ['entry_way']
                 },
             }
         },
-    }
+
+'entry_way': {
+        'name': 'entry_way',
+       # 'image': ascii_images['entry_way'],
+        'image': None,
+        'header': 'Entry Way',
+        'body': 'Youre in. But the Kultist isnt going to make this easy for you.The alarm beside the door begins to beep. You have 30 seconds to disable the alarm before it sounds.',
+        'conditionals': [['rock', 'smash'],],
+        'options': [
+            ['Smash it with a rock', 'ACTION', 'smash', False],
+            ['Go into the kitchen', 'NEXT', 'kitchen', False],
+            ['Go into the living room', 'NEXT', 'livingroom', False],
+            ['Go into the bedroom', 'NEXT', 'bedroom', False],
+            ['Youre a spy! Use the signal jammer.', 'ACTION', 'jammer', True], 
+        ],
+        'actions': {
+            'smash': {
+                'action': 'VIEW',
+                'message': ['', 'Its bright. Its loud. Its in your way of saving the WHOLE WORLD. Smashing it would be awesome, but it would get you caught... and possibly fired. Find a different way.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': []
+            },
+            'jammer': {
+                'action': 'TASK',
+                'message': ['To successfully use the jammer you must first determine the correct frequency. It is a number between 100 and 300. The last two digits are the same. You get the strange feeling that a computer would understand these two numbers.', 'You determined the frequency to be 100 and jammed the alarm system. Now you can explore the house.'],
+                'answer': '100',
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': False,
+                'unlocks': ['kitchen', 'bedroom', 'livingroom']
+            },
+        }
+    },
+}

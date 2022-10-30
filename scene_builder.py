@@ -4,12 +4,12 @@ default_header = input("set scene name as header? y/n\n")
 
 while default_header != 'n' and default_header != 'y':
     default_header = input("set scene name as header? y/n\n")
-    
+
 if default_header == 'n':
     header = input("header\n")
 else:
- header = scene_name
- 
+    header = scene_name
+
 scene_name = scene_name.lower()
 scene_name = scene_name.replace(" ", "_")
 
@@ -22,11 +22,13 @@ new_scene = f"""'{scene_name}': {{
         'image': None,
         'header': '{header}',
         'body': '{body}',
+        # [objInIv, unlockScene]
+        'conditionals': [],
         'options': [
             ['', 'NEXT', '', True],
             ['', 'NEXT', '', True],
             ['', 'ACTION', '', True],
-            ['', 'ACTION', '', True], 
+            ['', 'TASK', '', True], 
         ],
         'actions': {{
             '': {{
@@ -36,26 +38,24 @@ new_scene = f"""'{scene_name}': {{
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': False,
-                'unlock': []
+                'unlocks': []
             }},
             '': {{
-                'name': '',
                 'action': 'VIEW',
-                'message': ['', ''],
+                'message': ['', 'only this'],
                 # 'image': ascii_images[''],
                 'image': None,
-                'complete': False,
-                'unlock': []
+                'complete': True,
+                'unlocks': []
             }},
             '': {{
-                'name': '',
                 'action': 'TASK',
                 'message': ['', ''],
+                'answer': '',
                 # 'image': ascii_images[''],
                 'image': None,
-                'func': '',
                 'complete': False,
-                'unlock': []
+                'unlocks': []
             }},
         }}
     }},"""
