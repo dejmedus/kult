@@ -39,7 +39,8 @@ new_scene = f"""'{scene_name}': {{
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': False,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             }},
             '': {{
                 'action': 'VIEW',
@@ -47,7 +48,8 @@ new_scene = f"""'{scene_name}': {{
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             }},
             '': {{
                 'action': 'TASK',

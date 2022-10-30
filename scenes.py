@@ -217,7 +217,8 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             },
             'photo': {
                 'action': 'VIEW',
@@ -225,7 +226,8 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             },
             'receipt': {
                 'action': 'VIEW',
@@ -233,7 +235,8 @@ def return_all():
                 'image': ascii_images['receipt'],
                 # 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             },
             'cookbooks': {
                 'action': 'VIEW',
@@ -241,7 +244,8 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
             },
              'plates': {
                 'action': 'VIEW',
@@ -249,7 +253,170 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': []
+                'unlocks': [],
+                'locks': []
+            },
+        }
+    },'living_room': {
+        'name': 'living_room',
+       # 'image': ascii_images['living_room'],
+        'image': None,
+        'header': 'Living Room',
+        'body': 'Teh living room is sparse, but cozy. An overstuffed recliner sits facing a television. The walls feature abstract art and a poster you would expect to see at a science fair.',
+        'can_go_back': True,
+        # [objInIv, unlockScene]
+        'conditionals': [],
+        'options': [
+            ['Search the recliner', 'ACTION', 'recliner', True],
+            ['Look at the art', 'ACTION', 'art', True],
+            ['Examine the television', 'ACTION', 'tv', True],
+        ],
+        'actions': {
+            'tv': {
+                'action': 'VIEW',
+                'message': ['', 'The television looks new and quite expensive. When you try to turn it on you discover that the power cord has been cut.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': False,
+                'unlocks': [],
+                'locks': []
+            },
+            'recliner': {
+                'action': 'VIEW',
+                'message': ['', 'The brown recliner is worn at the edges. It is one of the few things in the house that looks like it is used regularly. The only thing you can find within is a lost pack of gum.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': [],
+                'locks': []
+            },
+            'art': {
+                'action': 'VIEW',
+                'message': ['', 'The oil paintings are beautiful, but feel somehow staged. Oddly, the most prominently placed wall hanging is a large poster emblazoned with the words "The blue shark can swim very far, dive really deep and hear noises from almost 250 metres away."'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': [],
+                'locks': []
             },
         }
     },
+    'bedroom': {
+        'name': 'bedroom',
+       # 'image': ascii_images['bedroom'],
+        'image': None,
+        'header': 'Bedroom',
+        'body': 'The bedroom is utilitarian. The walls and curtains are a dull white. It features a perfectly made bed, a dresser, and a nightstand. It reminds you of a hotel.',
+        'can_go_back': True,
+        # [objInIv, unlockScene]
+        'conditionals': [],
+        'options': [
+            ['Look under the bed', 'ACTION', 'bed', True],
+            ['Check the nightstand', 'ACTION', 'nightstand', True],
+            ['Search the dresser', 'ACTION', 'dresser', True],
+            ['Descend into the secret room', 'ACTION', 'secret', False],
+        ],
+        'actions': {
+            'bed': {
+                'action': 'VIEW',
+                'message': ['', 'You carefully run your hands along the blankets, but feel nothing out of the ordinary. The floor beneath is empty save for dust bunnies. Lifting the mattress reveals nothing.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': [],
+                'locks': []
+            },
+            'dresser': {
+                'action': 'VIEW',
+                'message': ['', 'Neatly folded clothing greets you when you open the dresser drawers. You carefully search through them one stack at a time, but turn up nothing. It wasnt a complete waste of time, you now know that cult members favour cashmere.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': [],
+                'locks': []
+            },
+            'nightstand': {
+                'action': 'VIEW',
+                'message': ['', 'The nightstand seems like a fairly reasonable place to hide criminal documents. On your way over to check it out you trip over a previously out of sight, and incredibly orange, rug. The corner of the rug has shifted to reveal the outline of a hatch.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': ['secret'],
+                'locks': []
+            },
+        }
+    },
+    'secret': {
+        'name': 'secret',
+       # 'image': ascii_images['secret'],
+        'image': None,
+        'header': 'The Inner Sanctum',
+        'body': 'The bottom the ladder is dark except for the illumination of a dozen computer monitors anchored to the wall. The space hosts a single bed, a kitchenette, and a door set ajar leading to a small bathroom. A desk takes up most of the space. To the side of the desk sits a large black combination safe.',
+        'can_go_back': True,
+        # [objInIv, unlockScene]
+        'conditionals': [],
+        'options': [
+            ['Search the desk', 'ACTION', 'desk', True],
+            ['Leave with the evidence and save humanity', 'NEXT', 'good', False],
+            ['Remain and become a card-carrying member of the Kult av Blåhaj', 'NEXT', 'kult', False],
+            ['Read the documents', 'ACTION', 'documents', False], 
+            ['Try to crack the safe', 'TASK', 'safe', True], 
+        ],
+        'actions': {
+            'desk': {
+                'action': 'VIEW',
+                'message': ['', 'Various coffee cups and rubber ducks occupy a large portion of the desks surface. Scrap paper with vague drawings of blue hamsters are strewn around. The monitors display a log in screen, but you doubt youd be able to access the computer in your limited time.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': [],
+                'locks': []
+            },
+            'safe': {
+                'action': 'TASK',
+                'message': ['You get the feeling that this safe is your last chance to find evidence that will stop the Kult. It requires a 6 digit combination. Have any numbers stuck out while exploring the house?', 'You cracked the safe with the code 250242. Now you just need to decide what to do with this knowledge.'],
+                'answer': '250242',
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': False,
+                'unlocks': ['documents'],
+                'locks': []
+            },
+            'documents': {
+                'action': 'VIEW',
+                'message': ['', 'You find stacks of documents inside the safe. They detail the Kult av Blåhajs plans to disburse a mind controlling toxin into the population in order to empower the entity they call Blåhaj. These documents contain everything the Agency will need to stop the plot.'],
+                # 'image': ascii_images[''],
+                'image': None,
+                'complete': True,
+                'unlocks': ['END', 'newfriends'],
+                'locks': ['safe']
+            },
+        }
+    },
+    'kult': {
+        'name': 'kult',
+       # 'image': ascii_images['kult'],
+        'image': None,
+        'header': 'Become The Newest Devotee',
+        'body': 'Now that you understand the great power and wonder of Blåhaj, you cant fathom returning  to your mundane life of espionage! You will use your skills to help your new Kult brethren. It doesnt matter that you are a government employee who has broken into one of their homes, they will totally understand.',
+        'can_go_back': False,
+        # [objInIv, unlockScene]
+        'conditionals': [],
+        'options': [
+            ['Follow Blåhaj', 'NEXT', 'END', True],
+        ],
+    },
+    'good': {
+        'name': 'good',
+       # 'image': ascii_images['good'],
+        'image': None,
+        'header': 'In Hopes of a Raise',
+        'body': 'The Kult isnt going to succeed on your watch. Your job is busy enough without a over-lord controlling the earth. The higher-ups will be pleased to know you saved the world and displayed unquestionable professionalism while doing it. No indiscriminate smashing of windows, alarms, or plates here. You deserve a raise and a vacation.',
+        'can_go_back': False,
+        # [objInIv, unlockScene]
+        'conditionals': [],
+        'options': [
+            ['Just another days work', 'NEXT', 'END', True],
+        ],
+    },
+}
