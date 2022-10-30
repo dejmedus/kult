@@ -183,10 +183,13 @@ def main(stdscr, scene, inventory):
                     for conditional in scene['conditionals']:
                         conditional_scene = conditional[1]
                         
+                         # if the conditional scene is the one we want to lock
+                         # get the conditional [obj, scene] pair and use them 
+                         # to remove from conditional from conditionals list
                         if conditional_scene == option_to_lock[0][2]:
-                            cond_option_to_lock = [option for option in all_options if conditional_scene in option]
-                            # remove scene from conditionals
-                            scene['conditionals'].remove(cond_option_to_lock)
+                            conditional_object = conditional[0]
+                            conditional_scene = conditional[1]
+                            scene['conditionals'].remove([conditional_object, conditional_scene])
             
         # return to current scene after finishing action
         wait_for_enter(stdscr)

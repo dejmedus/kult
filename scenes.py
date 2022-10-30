@@ -149,7 +149,7 @@ def return_all():
        # 'image': ascii_images['entry_way'],
         'image': None,
         'header': 'Entry Way',
-        'body': 'Youre in. But the Kultist isnt going to make this easy for you.The alarm beside the door begins to beep. You have 30 seconds to disable the alarm before it sounds.',
+        'body': 'Youre in. But the Kultist isnt going to make this easy for you. The alarm beside the door begins to beep. You have 30 seconds to disable the alarm before it sounds.',
         'can_go_back': False,
         'conditionals': [['rock', 'smash'], ],
         'options': [
@@ -184,7 +184,7 @@ def return_all():
        # 'image': ascii_images['the_kultists_lair'],
         'image': None,
         'header': 'The Kultists Lair',
-        'body': 'Now that the danger of discovery has passed you can look around without distractions. To the right is a small kitchen. To the left ais a living room devoid of furniture except for a recliner, a television, and some wall art. Ahead is two doors, one of which must lead to the bedroom.',
+        'body': 'Now that the danger of discovery has passed you can look around without distractions. To the right is a small kitchen. To the left, a living room devoid of furniture except for a recliner, a television, and some wall art. Ahead are two doors, one of which must lead to the bedroom.',
         'can_go_back': False,
         'conditionals': [],
         'options': [
@@ -199,7 +199,7 @@ def return_all():
        # 'image': ascii_images['kitchen'],
         'image': None,
         'header': 'Kitchen',
-        'body': 'The kitchen is spotless. The counters are empty save for a fruit bowl and what looks like a row of cook books. On the fridge, a color photograph of a shark and a an old grocery receipt are held on by magnets.',
+        'body': 'The kitchen is spotless. The counters are empty save for a fruit bowl and what looks like a row of cookbooks. On the fridge, a color photograph of a shark and a an old grocery receipt are held on by magnets.',
         # [objInIv, unlockScene]
         'can_go_back': True,
         'conditionals': [['rock', 'plates']],
@@ -207,13 +207,13 @@ def return_all():
             ['Examine the fruit bowl', 'ACTION', 'fruitbowl', True],
             ['Look at the photograph', 'ACTION', 'photo', True],
             ['Read the grocery receipt', 'ACTION', 'receipt', True],
-            ['Page through the cook books', 'ACTION', 'cookbooks', True],
+            ['Page through the cookbooks', 'ACTION', 'cookbooks', True],
             ['Smash all the plates with the rock', 'ACTION', 'plates', False],
         ],
         'actions': {
             'fruitbowl': {
                 'action': 'VIEW',
-                'message': ['', 'Apples and oranges sit in a white bowl. They are shiny and seemingly very fresh. There is nothing else in the bowl.'],
+                'message': ['', 'Apples and oranges sit in a white bowl. They relatively fresh. There is nothing else in the bowl.'],
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
@@ -231,8 +231,8 @@ def return_all():
             },
             'receipt': {
                 'action': 'VIEW',
-                'message': ['', ' '],
-                'image': ascii_images['receipt'],
+                'message': ['', 'Milk: $5.25, Cheese: $4.00, Apples: $6:25, Eggs: $5.00, Bread: $2.00, Butter: $7.50, Waffles: $13.00, Total: $45.00'],
+                # 'image': ascii_images['receipt'],
                 # 'image': None,
                 'complete': True,
                 'unlocks': [],
@@ -240,7 +240,7 @@ def return_all():
             },
             'cookbooks': {
                 'action': 'VIEW',
-                'message': ['', 'The hardback cookbooks sit in a neat row. Upon perusal you find they are all empty except for one book. In it, someone has noted what seems to be the recipe for a cheese sandwich. It reads as follows: bread cheese bread'],
+                'message': ['', 'The hardcover cookbooks sit in a neat row. Upon perusal you find they are all empty except for one. In it, someone has written what seems to be the recipe for a cheese sandwich. It reads as follows: bread cheese bread'],
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
@@ -257,12 +257,12 @@ def return_all():
                 'locks': []
             },
         }
-    },'living_room': {
-        'name': 'living_room',
-       # 'image': ascii_images['living_room'],
+    },'livingroom': {
+        'name': 'livingroom',
+       # 'image': ascii_images['livingroom'],
         'image': None,
         'header': 'Living Room',
-        'body': 'Teh living room is sparse, but cozy. An overstuffed recliner sits facing a television. The walls feature abstract art and a poster you would expect to see at a science fair.',
+        'body': 'The living room is sparsely furnished. An overstuffed recliner sits facing a television. The walls feature abstract art and a poster you would expect to see at a science fair.',
         'can_go_back': True,
         # [objInIv, unlockScene]
         'conditionals': [],
@@ -277,7 +277,7 @@ def return_all():
                 'message': ['', 'The television looks new and quite expensive. When you try to turn it on you discover that the power cord has been cut.'],
                 # 'image': ascii_images[''],
                 'image': None,
-                'complete': False,
+                'complete': True,
                 'unlocks': [],
                 'locks': []
             },
@@ -312,9 +312,9 @@ def return_all():
         'conditionals': [],
         'options': [
             ['Look under the bed', 'ACTION', 'bed', True],
-            ['Check the nightstand', 'ACTION', 'nightstand', True],
             ['Search the dresser', 'ACTION', 'dresser', True],
-            ['Descend into the secret room', 'ACTION', 'secret', False],
+            ['Check the nightstand', 'ACTION', 'nightstand', True],
+            ['Descend into the secret room', 'NEXT', 'secret', False],
         ],
         'actions': {
             'bed': {
@@ -342,7 +342,7 @@ def return_all():
                 'image': None,
                 'complete': True,
                 'unlocks': ['secret'],
-                'locks': []
+                'locks': ['nightstand']
             },
         }
     },
@@ -351,26 +351,26 @@ def return_all():
        # 'image': ascii_images['secret'],
         'image': None,
         'header': 'The Inner Sanctum',
-        'body': 'The bottom the ladder is dark except for the illumination of a dozen computer monitors anchored to the wall. The space hosts a single bed, a kitchenette, and a door set ajar leading to a small bathroom. A desk takes up most of the space. To the side of the desk sits a large black combination safe.',
+        'body': 'The bottom the ladder is dark except for the illumination of a dozen computer monitors anchored to the wall. The space hosts a single bed, a kitchenette, and a door set ajar leading to a small bathroom. A long desk takes up most of the space. To the side of the desk sits a large black combination safe.',
         'can_go_back': True,
         # [objInIv, unlockScene]
         'conditionals': [],
         'options': [
             ['Search the desk', 'ACTION', 'desk', True],
             ['Leave with the evidence and save humanity', 'NEXT', 'good', False],
-            ['Remain and become a card-carrying member of the Kult av Blåhaj', 'NEXT', 'kult', False],
+            ['Remain and become a card-carrying member of the Kult av Blåhaj', 'NEXT', 'newfriends', False],
             ['Read the documents', 'ACTION', 'documents', False], 
-            ['Try to crack the safe', 'TASK', 'safe', True], 
+            ['Try to crack the safe', 'ACTION', 'safe', True], 
         ],
         'actions': {
             'desk': {
                 'action': 'VIEW',
-                'message': ['', 'Various coffee cups and rubber ducks occupy a large portion of the desks surface. Scrap paper with vague drawings of blue hamsters are strewn around. The monitors display a log in screen, but you doubt youd be able to access the computer in your limited time.'],
+                'message': ['', 'Various coffee cups and rubber ducks occupy a large portion of the desks surface. Scrap paper with vague drawings of blue hamsters are strewn around. The monitors display a log in screen, but you doubt you would be able to access the computer in your limited time.'],
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
                 'unlocks': [],
-                'locks': []
+                'locks': ['desk']
             },
             'safe': {
                 'action': 'TASK',
@@ -380,7 +380,7 @@ def return_all():
                 'image': None,
                 'complete': False,
                 'unlocks': ['documents'],
-                'locks': []
+                'locks': ['safe']
             },
             'documents': {
                 'action': 'VIEW',
@@ -388,13 +388,13 @@ def return_all():
                 # 'image': ascii_images[''],
                 'image': None,
                 'complete': True,
-                'unlocks': ['END', 'newfriends'],
-                'locks': ['safe']
+                'unlocks': ['good', 'newfriends'],
+                'locks': []
             },
         }
     },
-    'kult': {
-        'name': 'kult',
+    'newfriends': {
+        'name': 'newfriends',
        # 'image': ascii_images['kult'],
         'image': None,
         'header': 'Become The Newest Devotee',
@@ -413,7 +413,6 @@ def return_all():
         'header': 'In Hopes of a Raise',
         'body': 'The Kult isnt going to succeed on your watch. Your job is busy enough without a over-lord controlling the earth. The higher-ups will be pleased to know you saved the world and displayed unquestionable professionalism while doing it. No indiscriminate smashing of windows, alarms, or plates here. You deserve a raise and a vacation.',
         'can_go_back': False,
-        # [objInIv, unlockScene]
         'conditionals': [],
         'options': [
             ['Just another days work', 'NEXT', 'END', True],

@@ -26,11 +26,10 @@ def ascii_collection():
         'recipe': '''
                     _________________________________
                     |                                |
-                    |    Grilled Cheese Sandwich     |
+                    |    Cheese Sandwich             |
                     |    1. piece of bread           |
                     |    2. add cheese               |
                     |    3. piece of bread           |
-                    |    4. b̷u̷t̷t̷e̷r̷ ̷b̷r̷e̷a̷d̷             |
-                    |    5. fry                      |
+                    |                                |
                     __________________________________'''
     }               
