@@ -17,7 +17,7 @@ This [article](https://www.devdungeon.com/content/curses-windows-python) recomme
 
 ### To Play the Game
 1. Fork the repository
-2. Clone you-github-username/kult
+2. Clone your-github-username/kult
 3. cd into the directory where you will store the game files
 4. Paste clone path into your terminal
 5. ```cd kult```
