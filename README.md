@@ -74,6 +74,7 @@ The odd poster in the living room features the numbers 250
 There are two possible combinations of these 6 numbers 250242 or 242250
 
 As a hint, the photo of the shark is seen before the grocery receipt
+
 Answer: **250242**
 </details>
 </details>
