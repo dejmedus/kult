@@ -25,7 +25,7 @@ def start_scene():
 def intro_scene():
     return [
         '''
-        The government's intelligence service has received reports that followers of the clandestine secret society: Kult av Blåhaj, will soon attempt to enslave humanity with an airborne biotoxin.''',
+        The intelligence service has received reports that followers of the clandestine secret society: Kult av Blåhaj, will soon attempt to enslave humanity with an airborne biotoxin.''',
 
         '''
         It is unknown where this chemical weapon, if real, is located or who has access to its trigger. The agency has opted to conduct investigations quietly, without tipping off Kult members.''',
@@ -211,7 +211,7 @@ def return_all():
             'actions': {
                 'fruitbowl': {
                     'action': 'VIEW',
-                    'message': ['', 'Apples and oranges sit in a white bowl. They relatively fresh. There is nothing else in the bowl.'],
+                    'message': ['', 'Apples and oranges sit in a white bowl. They are relatively fresh. There is nothing else in the bowl.'],
                     # 'image': ascii_images[''],
                     'image': None,
                     'complete': True,
