@@ -4,8 +4,8 @@
 
 #### It's up to you to infiltrate this nefarious group, learn the truth, and save humanity.
 
-Kult is a micro text adventure created for the Major League Hacking Agent:Hacker 2 Hackathon.
-It was built with Python (3.10.3) and the curses module. It runs in the terminal window.
+Kult is a micro text adventure created for the Major League Hacking Agent:Hacker 2 Hackathon in one weekend.
+It was built with Python (3.10.3) and the curses module. It runs in the terminal window and will likely take ~10 minutes to play through.
 
 ### Setup
 
