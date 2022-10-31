@@ -98,6 +98,6 @@ These two StackOverflow questions & answers pointed me towards the curses packag
 - [How do I print colored text to the terminal](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal)
 - [How to make a menu in python with arrow keys](https://stackoverflow.com/questions/39488788/how-to-make-a-menu-in-python-navigable-with-arrow-keys)
 
-List comprehension: [docs.python](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
+List comprehensions: [docs.python](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions)
 
-Curses Module: [docs.python](https://docs.python.org/3/library/curses.html#module-curses.textpad)
+Curses module: [docs.python](https://docs.python.org/3/library/curses.html#module-curses.textpad)
