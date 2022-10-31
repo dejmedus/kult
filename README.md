@@ -24,6 +24,15 @@ This [article](https://www.devdungeon.com/content/curses-windows-python) recomme
 6. ```python3 main.py```
 7. Enjoy!
 
+### Game play examples
+<details>
+<summary>📷</summary>
+
+<img width="625" alt="Living room" src="https://user-images.githubusercontent.com/59973863/198926214-6437b88d-4f2f-44b5-bd37-a38dd0d4dab0.png">
+<img width="631" alt="kitchen" src="https://user-images.githubusercontent.com/59973863/198926278-b0217a87-d3fe-4381-8f8f-7635fc760606.png">
+
+</details>
+
 ### Walkthrough
 This walkthrough contains hints about how to solve the logic puzzles. It also offers the answers.
 <details>
